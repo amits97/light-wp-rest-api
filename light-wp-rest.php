@@ -18,15 +18,15 @@ define( 'LIGHT_REST_API_VERSION', '0.1' );
 
 add_action( 'init', 'wordpress_rest_init' );
 function wordpress_rest_init() {
-    add_rewrite_rule( '^restify/?', 'index.php?wprestasn_api=1', 'top' );
+    add_rewrite_rule( '^restify/posts?', 'index.php?wprestasn_api=1', 'top' );
 
-	//Determine if Rewrite rules need to be flushed
+    //Determine if Rewrite rules need to be flushed
     $version = get_option( 'light_json_api_version', null );
 
-	if ( empty( $version ) ||  $version !== LIGHT_REST_API_VERSION ) {
-		flush_rewrite_rules();
-		update_option( 'light_json_api_version', JSON_API_VERSION );
-	}
+    if ( empty( $version ) ||  $version !== LIGHT_REST_API_VERSION ) {
+        flush_rewrite_rules();
+        update_option( 'light_json_api_version', JSON_API_VERSION );
+    }
 }
 
 add_filter( 'query_vars', 'wordpress_rest_query_vars' );
@@ -42,4 +42,55 @@ function wordpress_rest_parse_request( &$wp ) {
         exit();
     }
     return;
+}
+
+
+//Add Admin dashboard
+add_action('admin_menu', 'wordpress_rest_plugin_settings');
+function wordpress_rest_plugin_settings() {
+    add_menu_page('Light WP Rest Settings', 'Light WP Rest Settings', 'administrator', 'wordpress_rest_plugin_settings', 'wordpress_rest_display_settings');
+}
+
+function wordpress_rest_display_settings() {
+    $lightwprest_posts_fields = (get_option('lightwprest_posts_fields') != '') ? get_option('lightwprest_posts_fields') : '[]';
+    $html = '
+        </pre>
+            <div class="wrap"><form action="options.php" method="post" name="options">
+                <h2>Light WP Rest Settings</h2>
+                ' . wp_nonce_field('update-options') . '
+                <hr /><br />
+                <div class="postbox">
+                <div style="padding: 0 15px;">
+                <table class="form-table" width="100%" cellpadding="10">
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                <label>Fields to show in /restify/posts</label>
+                            </th>
+
+                            <td>
+                                <input type="checkbox" name="lightwprest_posts_fields[]" value="title" '.(in_array("title", $lightwprest_posts_fields)?'checked="checked"':'').'/>Title<br />
+                                <input type="checkbox" name="lightwprest_posts_fields[]" value="status" '.(in_array("status", $lightwprest_posts_fields)?'checked="checked"':'').'/>Status<br />
+                                <input type="checkbox" name="lightwprest_posts_fields[]" value="type" '.(in_array("type", $lightwprest_posts_fields)?'checked="checked"':'').'/>Type<br />
+                                <input type="checkbox" name="lightwprest_posts_fields[]" value="author" '.(in_array("author", $lightwprest_posts_fields)?'checked="checked"':'').'/>Author<br />
+                                <input type="checkbox" name="lightwprest_posts_fields[]" value="content" '.(in_array("content", $lightwprest_posts_fields)?'checked="checked"':'').'/>Content<br />
+                                <input type="checkbox" name="lightwprest_posts_fields[]" value="parent" '.(in_array("parent", $lightwprest_posts_fields)?'checked="checked"':'').'/>Parent<br />
+                                <input type="checkbox" name="lightwprest_posts_fields[]" value="link" '.(in_array("link", $lightwprest_posts_fields)?'checked="checked"':'').'/>Link<br />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+                </div>
+ 
+                <input type="hidden" name="action" value="update" />
+
+                <input type="hidden" name="page_options" value="lightwprest_posts_fields" />
+
+                <input type="submit" name="Submit" value="Update" class="button-primary" id="submitbutton" /></form></div>
+        <pre>
+    ';
+
+    echo $html;
+
 }
