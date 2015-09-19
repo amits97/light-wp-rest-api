@@ -1,4 +1,10 @@
 <?php
+
+    /**
+     * Fetch all Posts
+     * 
+     */
+
     $paged = ($wp->query_vars['page'])?$wp->query_vars['page']:1;
     $posts_per_page = (get_option('lightwprest_posts_per_page') != '')?intval(get_option('lightwprest_posts_per_page')):10;
 	$post_query = new WP_Query();
