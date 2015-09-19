@@ -12,7 +12,7 @@
 	$response = '';
 
 	//Fetch Plugin Options
-    $lightwprest_single_post_fields = (get_option('lightwprest_single_post_fields') != '')?get_option('lightwprest_single_post_fields'):'[]';
+    $lightwprest_single_post_fields = (get_option('lightwprest_single_post_fields') != '')?get_option('lightwprest_single_post_fields'):array();
 	$show_id = in_array("id", $lightwprest_single_post_fields)?true:false;
 	$show_title = in_array("title", $lightwprest_single_post_fields)?true:false;
 	$show_status = in_array("status", $lightwprest_single_post_fields)?true:false;

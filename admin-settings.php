@@ -11,9 +11,9 @@ function wordpress_rest_plugin_settings() {
 }
 
 function wordpress_rest_display_settings() {
-    $lightwprest_posts_fields = (get_option('lightwprest_posts_fields') != '') ? get_option('lightwprest_posts_fields') : '[]';
+    $lightwprest_posts_fields = (get_option('lightwprest_posts_fields') != '') ? get_option('lightwprest_posts_fields') : array();
     $lightwprest_posts_per_page = (get_option('lightwprest_posts_per_page') != '') ? get_option('lightwprest_posts_per_page') : '10';
-    $lightwprest_single_post_fields = (get_option('lightwprest_single_post_fields') != '') ? get_option('lightwprest_single_post_fields') : '[]';
+    $lightwprest_single_post_fields = (get_option('lightwprest_single_post_fields') != '') ? get_option('lightwprest_single_post_fields') : array();
     $html = '
         </pre>
             <div class="wrap"><form action="options.php" method="post" name="options">

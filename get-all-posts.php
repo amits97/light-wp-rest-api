@@ -17,7 +17,7 @@
 	$response = array();
 
 	//Fetch Plugin Options
-    $lightwprest_posts_fields = (get_option('lightwprest_posts_fields') != '')?get_option('lightwprest_posts_fields'):'[]';
+    $lightwprest_posts_fields = (get_option('lightwprest_posts_fields') != '')?get_option('lightwprest_posts_fields'):array();
 	$show_id = in_array("id", $lightwprest_posts_fields)?true:false;
 	$show_title = in_array("title", $lightwprest_posts_fields)?true:false;
 	$show_status = in_array("status", $lightwprest_posts_fields)?true:false;
