@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Light WP REST API
- * Plugin URI: http://amitsn.com
+ * Plugin URI: https://github.com/amits97/light-wp-rest-api
  * Description: This plugin adds basic light-weight JSON based REST API to your WordPress blog.
  * Version: 1.0.0
  * Author: Amit S Namboothiry
